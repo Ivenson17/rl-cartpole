@@ -1,14 +1,19 @@
 import gymnasium as gym
 
-env = gym.make("CartPole-v1")
+env = gym.make(
+    "CartPole-v1",
+    render_mode="human"
+)
 
 obs, info = env.reset()
 
-print("状态空间：")
-print(env.observation_space)
+while(1):
 
-print("动作空间：")
-print(env.action_space)
+    action = env.action_space.sample()
 
-print("当前状态：")
-print(obs)
+    obs, reward, terminated, truncated, info = env.step(action)
+
+    if terminated or truncated:
+        obs, info = env.reset()
+
+env.close()
